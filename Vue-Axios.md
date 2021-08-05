@@ -18,7 +18,7 @@ axios.patch(url[,data[,config])
 安装 axios：
 
 ```
-npm instal axios --save
+npm install axios --save
 ```
 
 

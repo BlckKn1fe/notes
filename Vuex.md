@@ -348,5 +348,61 @@ updateInfo() {
 
 
 
+#  线程总线
+
+在 Vuex 里补充一下这个吧... 毕竟都是全局的东西
+
+线程总线简单来说就是一个可以全局实现发送事件，全局监听事件的一个东西，在项目入口 `main.js` 给 Vue 的原型添加一个 `$bus`
+
+```javascript
+Vue.prototype.$bus = new Vue()
+```
+
+
+
+这里通过创建新的 Vue 实例来作为线程总线使用
+
+之后在任意一个组件中，都可以通过以下方式来发送事件出去：
+
+```javascript
+this.$bus.$emit('eventName', {})
+```
+
+
+
+之后在任意一个组件中都可以监听到这个事件：
+
+```javascript
+this.$bus.$on('eventName', () => { /* callback function */})
+```
+
+
+
+# 防抖函数
+
+假如，当用户在使用网页搜索内容的时候，如果每次检测到输入框的修改就发送一次请求，然后修改下方内容提示的话，会对服务器造成很大的压力，比较好的处理方法就是用户输入间隔大于一定时间之后，再发送请求，可以通过防抖函数来实现
+
+防抖 debounce  / （节流throttle）
+
+```javascript
+debounce(fn, delay) {
+  // 此处的 timer 会作为局部变量一直被引用
+  let timer = null
+  return function (...args) {
+    if (timer) clearTimeout(timer)
+
+    timer = setTimeout(() => {
+      fn.apply(this, args)
+    }, delay)
+  }
+}
+```
+
+
+
+
+
+
+
 
 
