@@ -115,3 +115,25 @@ resolve: {
 },
 ```
 
+
+
+对于 CLI3 来说，配置方式稍微有点区别；首先在根目录下创建文件 `vue.config.js` ，并且写入一下内容：
+
+```javascript
+module.exports = {
+  configureWebpack: {
+    resolve: {
+      alias: {
+        'aseets': '@/assets',
+        'common:': '@/common',
+        'components': '@/components',
+        'network': '@/network',
+        'views': '@/views'
+      }
+    }
+  }
+}
+```
+
+
+
