@@ -128,7 +128,7 @@ BufferedWriter bw =
 
 图解：
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20200523025505.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20200523025505.png)
 
 
 

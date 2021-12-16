@@ -324,7 +324,7 @@ String[] arr = list.toArray(new String[10]);
 
 实际开发中呢，用 IDE 自带的重写 hashCode 和 equals 方法就可以。
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20200323070640.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20200323070640.png)
 
 
 
@@ -719,7 +719,7 @@ file3.delet();
 
 直接贴图
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20200516214932.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20200516214932.png)
 
 注意事项：
 
@@ -753,7 +753,7 @@ String arr = dir.list(new FilenameFilter() {
 
 附上源码：
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20200519223858.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20200519223858.png)
 
 
 
@@ -761,7 +761,7 @@ String arr = dir.list(new FilenameFilter() {
 
 简单概述
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20200519230216.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20200519230216.png)
 
 这四个都是最顶的抽象父类，往下的话以后缀进行判断。什么什么 Stream 就是字节流，什么什么Reader 或者什么什么 Writer 就是字符流。
 

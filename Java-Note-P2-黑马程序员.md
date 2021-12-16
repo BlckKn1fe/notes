@@ -21,7 +21,7 @@ tags:
 
 方法区也可以理解为代码仓库，.class文件会被加载到方法区。
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191016002615.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191016002615.png)
 
 大概步骤：
 
@@ -46,7 +46,7 @@ class Person {
 }
 ```
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191017012506.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191017012506.png)
 
 懒得打字了，打这些浪费时间
 
@@ -100,13 +100,13 @@ creatCar(new Car());
 
 创造一个对象的时候的内存图
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191019221002.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191019221002.png)
 
 
 
 ## P25 static修饰词
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191020172253.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191020172253.png)
 
 在每一个类被传进方法区的时候，都会存在一个静态区，所有被static修饰的东西（方法，变量）都会进入到这个区域；每一个实例对象都会共享这一个static，以图中例子为例，两个人都是日本国籍，事先设定好country变量的话，那么以后无论生成多少个实例对象，他们的country的值都是日本。
 
@@ -131,7 +131,7 @@ creatCar(new Car());
 2. 静态方法只能访问静态的成员变量和静态的成员方法
 3. 非静态方法就通用一点，静不静态都无所谓，要求不是很严格
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191020212100.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191020212100.png)
 
 
 
@@ -201,9 +201,9 @@ Java文档可以通过 javadoc 指令来生成一个网页版高大上的说明�
 javadoc -d [路径] [需要显示的内容] [类名]
 ```
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191020221459.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191020221459.png)
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191020221607.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191020221607.png)
 
 ## P33 简单的Random介绍
 
@@ -277,7 +277,7 @@ class Student {
 
 还是以以上代码为例，在第一次加载该类的时候，该类会先进入到方法区，然后读取这个类；static修饰的代码块会进入到静态区，被读取之后会直接执行，如果方法区没有开启垃圾回收机制（GC）的话，不会发生二次加载该类，所以当第二次创造该类实例对象的时候，也就不会将静态代码块执行两次了。**注意：静态代码块基本来说是最高优先级输出了，一个类进方法区后，读取静态区就会执行；main() 方法也不例外**
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191021014933.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191021014933.png)
 
 （这里学生学习实际就是构造代码块，空参和有参结构是在构造函数里输出的。以上是创造了两个Student的实例对象。）
 
@@ -459,7 +459,7 @@ class Son extends Father {
 
    这种情况，name和age是一起变的，通过在main函数中调用get方法可以验证：
 
-   ![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191021193407.png)
+   ![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191021193407.png)
 
 2. **若子类中声明了成员变量且非私有：**
 
@@ -499,7 +499,7 @@ class Son extends Father {
    }
    ```
 
-   ![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191021195049.png)
+   ![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191021195049.png)
 
 3. **子类成员变量私有化**，和以上效果一样，不过私有化之后也就是提高了安全性，必须要用set和get方法操作，直接用 s.name 或者 s.age 没办法访问到
 
@@ -585,7 +585,7 @@ class Son extends Father {
    }
    ```
 
-   ![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191021212252.png)
+   ![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191021212252.png)
 
 
 
@@ -761,7 +761,7 @@ public static void main(String[] args) {
 
 先上个图和代码再解释...
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191022214049.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191022214049.png)
 
 ```java
 class Father {
@@ -804,7 +804,7 @@ f.print();  //此处输出为son
 
 ```
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191022222004.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191022222004.png)
 
 这里的流程是先检查父类中存不存在该方法（print()），保证编译通过，然后去子类找该方法。
 
@@ -873,7 +873,7 @@ SuperMan sm = (superMan)p;  //向下转型
 sm.fly();
 ```
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191030003327.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191030003327.png)
 
 ### 7. 转型的好处和弊端
 
@@ -1276,7 +1276,7 @@ interface Jumping {
 
 简单易懂，不多bb
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191107064143.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191107064143.png)
 
 
 
@@ -1305,11 +1305,11 @@ class Demo1_Package {
 }
 ```
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191107065923.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191107065923.png)
 
 这个带package的文件编译之后，生成的.class文件必须要在这个路径下。如果一开始的时候这个路径不存在的话，通过编译，系统会自动给你创建这个路径，然后这个类也会在这个路径下。
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191107070302.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191107070302.png)
 
 以后用eclipse就会比较方便了
 
@@ -1367,7 +1367,7 @@ public class Person {
 
 ## P81 4种权限修饰符
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191109223923.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191109223923.png)
 
 
 
@@ -1381,7 +1381,7 @@ private只能在本类中使用。
 
 **放一个总结表：**
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191110011823.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191110011823.png)
 
 
 
@@ -1485,7 +1485,7 @@ class Outer {
 
 这个num必须要用final来修饰，让num变成常量，这样num就会进入到方法区中的常量池，可以延迟声明周期。放一个内存图
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191110204131.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191110204131.png)
 
 引用视频中的话：
 

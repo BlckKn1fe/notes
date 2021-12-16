@@ -46,7 +46,7 @@ boolean b2 = false;
 
 ```
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20200223235128.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20200223235128.png)
 
 ## P35 变量声明注意事项
 
@@ -73,7 +73,7 @@ x = x + b;
 
 ```
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20190925025740.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20190925025740.png)
 
 这里会先把byte类型转成int类型（在计算机底层）
 
@@ -87,7 +87,7 @@ byte b = 4;
 b = (byte)(x + b); //这里是大的（int）往小的（byte）里装
 ```
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20190925232245.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20190925232245.png)
 
 
 
@@ -464,7 +464,7 @@ switch(x) {
 
 (懒得打了...顺便看看图床还好用不)
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191012030650.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191012030650.png)
 
 ### 使用场景
 
@@ -507,7 +507,7 @@ Mark标记：
 
 ​		简单来说就是在循环的开头可以用一个合法的标识符加冒号，可以来指定特定的一个循环，然后即使是在最内部的一个循环，也可以通过break xxx的方式来终止任意一层循环。
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191013031426.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191013031426.png)
 
 
 
@@ -606,7 +606,7 @@ int[] arr2 = {11, 22, 33, 44, 55, 66};
 
 
 
-<img src="https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191014180759.png" style="zoom:75%;" />
+<img src="https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191014180759.png" style="zoom:75%;" />
 
 栈是先进后出（就和枪上子弹一样，先进的后出，后进的先出）
 
@@ -705,7 +705,7 @@ int[] x, y[];   //此处x是一维数组，y是二维数组
 
 **内存图**：
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191014220434.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191014220434.png)
 
 
 
@@ -760,7 +760,7 @@ public static void change(int a, int b) {
 
 在main里的a和b是只在main里的，调用change把a和b丢进去只是会有一个传值的过程，并不是说把a和b本身传进去。
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191015042650.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191015042650.png)
 
 运行完change之后会弹栈（出栈），基本数据类型的值传递，不改变原值，因为调用后就会弹栈，局部变量随之消失。
 
@@ -791,7 +791,7 @@ public static void change(int[] arr) {
 
 简易图解
 
-![](https://raw.githubusercontent.com/BlckKn1fe/guanyu-pictures/master/images/20191015043807.png)
+![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20191015043807.png)
 
 在语句int[]出现之后会在堆(heap)里产生对应的一块空间，然后调用change()方法的时候会压栈（进栈）并且吧刚才的arr传进来，这个操作是对堆(heap)内的数据进行操作，main中的arr和change中的arr都指向的是一个地址，所以这次会发生改变，里面的最后结果是[1,4,3,8,5] 而不是[1,2,3,4,5]
 
