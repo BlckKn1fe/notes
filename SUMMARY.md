@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Mac Setup](README.md)
-* [XML快速入门](XML快速入门.md)
+* [XML快速入门](xml-kuai-su-ru-men.md)
 
 ## Spring
 
