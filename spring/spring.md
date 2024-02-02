@@ -1,24 +1,18 @@
 ---
-
-
-creation date: 2021-10-09 23:55:20
-
-last modified: 2021-12-18 00:52:07
-
+creation date: 2021-10-09T23:55:20.000Z
+last modified: 2021-12-18T00:52:07.000Z
 title: Spring
-
 categories:
-
-- back-end
-- spring
-
+  - back-end
+  - spring
 tags:
-- spring
-- java
-
+  - spring
+  - java
 ---
 
-# 快速开始
+# Spring
+
+## 快速开始
 
 创建一个空 Maven 项目，并且导入一下坐标
 
@@ -80,18 +74,18 @@ public class UserDaoDemo {
 }
 ```
 
-# IOC-Bean管理
+## IOC-Bean管理
 
 ![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20211011031650.png#alt=)
 
-## Bean 标签基本配置
+### Bean 标签基本配置
 
 用于配置对象，并且交给 Spring 来创建，默认情况下调用类的空参构造函数
 
 两个基本属性：
 
-- id: Bean 实例在 Spring 容器中的唯一标识
-- class: Bean 的全限定名
+* id: Bean 实例在 Spring 容器中的唯一标识
+* class: Bean 的全限定名
 
 默认情况下，从容器中获取到的对象是单例的，除非在配置文件中修改 scope 属性
 
@@ -102,12 +96,12 @@ public class UserDaoDemo {
 1. singleton: **加载完配置文件之后会创建对象**，并添加到容器中
 2. prototype: 每 getBean 一次，创建一次对象
 
-## Bean 生活周期配置*
+### Bean 生活周期配置\*
 
 有两个基本的属性可以配置（还是配置在 bean 标签上）：
 
-- init-method: 指定类中的初始化方法名称
-- destroy-method: 指定类中销毁方法名称
+* init-method: 指定类中的初始化方法名称
+* destroy-method: 指定类中销毁方法名称
 
 ```xml
 <bean id="userDao" class="com.xxx.dao.impl.UserDaoImpl" scope="singleton" init-method="init" destroy-method="destroy" />
@@ -123,15 +117,18 @@ public class UserDaoDemo {
 4. 获取到对象
 5. 执行销毁方法 (app.close())
 
-## Bean 实例化三种方法
+### Bean 实例化三种方法
 
-1. 
+1.
+
 无参构造方法实例化
 
-2. 
+2.
+
 工厂静态方法实例化
 
 创建 `factory.StaticFacoty` 类，并且在类中写入一个静态方法
+
 ```java
 public class StaticFactory {
 
@@ -142,34 +139,35 @@ public class StaticFactory {
 }
 ```
 
-
 修改配置文件（主要是配置 factory-method 这个属性）
+
 ```xml
 <bean id="userDao" class="com.xxx.factory.StaticFactory" factory-method="getUserDao"/>
 ```
 
+3.
 
-3. 
 工厂实例方法实例化
 
 基本和工厂静态方法实例化很接近，但是 get 方法没有 static 修饰，主要在配置文件上
+
 ```xml
 <bean id="factory" class="com.xxx.factory.DynamicFactory"/>
 <bean id="userDao" factory-bean="factory" factory-method="getUserDao"/>
 ```
 
-
-
-## Bean 依赖注入
+### Bean 依赖注入
 
 当一个 Bean 对象里，有一些 filed 需要让 Spring 帮我们去设置进去的话，比如 Service 对象里想有一个 Dao 对象来作为成员变量，就可以通过 Spring 依赖注入来设置它
 
 有两种方式：
 
-1. 
+1.
+
 通过 Set 方法：
 
 在对应的 Bean 对象中，声明需要注入的对象，然后生成对应的 set 方法，最后修改配置文件
+
 ```xml
 <bean id="userDao" class="com.xxx.dao.impl.UserDaoImpl"/>
 <bean id="userService" class="com.xxx.service.impl.UserServiceImpl">
@@ -178,16 +176,16 @@ public class StaticFactory {
 </bean>
 ```
 
-
 set 还可以通过命名空间的方式来简化配置内容
 
 首先在 Spring 配置文件开头，加入新的命名空间
+
 ```xml
 xmlns:p="http://www.springframework.org/schema/p"
 ```
 
-
 然后修改对于 UserService 的配置
+
 ```xml
 <bean id="userService"
           class="com.xxx.service.impl.UserServiceImpl"
@@ -195,11 +193,12 @@ xmlns:p="http://www.springframework.org/schema/p"
     </bean>
 ```
 
+2.
 
-2. 
 通过构造函数
 
 首先在对应的 Bean 对象中，声明好构造函数，然后修改配置文件
+
 ```xml
 <bean id="userService" class="com.XXX.service.impl.UserServiceImpl">
     <!--下面这个 name 对应的是构造函数的参数名-->
@@ -207,20 +206,22 @@ xmlns:p="http://www.springframework.org/schema/p"
 </bean>
 ```
 
-
-
 Bean 的依赖注入的数据类型有三种：
 
-1. 
+1.
+
 普通数据类型：name 后面设置 value 属性
 
-2. 
+2.
+
 引用数据类型：上面的例子都是引用数据类型
 
-3. 
+3.
+
 集合数据类型：针对不同的类型，要在每个 property 的标签体内进行单独的设置
 
 假设在 UserDao 中添加三个 fields，分别为 List，Map，和 properties 类型，然后修改配置文件
+
 ```xml
 <!--集合注入-->
 <bean id="userDao" class="com.guanyu.dao.impl.UserDaoImpl">
@@ -249,9 +250,7 @@ Bean 的依赖注入的数据类型有三种：
 </bean>
 ```
 
-
-
-## 抽取集合
+### 抽取集合
 
 如果配一个 List 的内容在一个对象下，内容可能会很多，比较乱，可以通过 util 把 List 的内容都抽出去
 
@@ -274,7 +273,7 @@ http://www.springframework.org/schema/util/spring-util.xsd
 </util:list>
 ```
 
-## 后置处理器
+### 后置处理器
 
 后置处理器可以对整个配置文件中要生成的 Bean 对象进行处理，其运行在执行初始化方法之前和之后。需要实现 BeanPostProcessor 借口：
 
@@ -297,7 +296,7 @@ public class MyBeanPost implements BeanPostProcessor {
 
 然后在配置文件中创建这个 Bean 对象即可
 
-## 引入其他配置文件（分模块开发）
+### 引入其他配置文件（分模块开发）
 
 实际开发中，Spring的配置内容非常多，这就导致Spring配置很繁杂且体积很大，所以可以将部分配置拆解到其他配置文件中，而在Spring主配置文件通过import标签进行加载
 
@@ -306,40 +305,39 @@ public class MyBeanPost implements BeanPostProcessor {
 <import resource="applicationContext-user.xml"/>
 ```
 
-# ApplicationContext
+## ApplicationContext
 
 ![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/20211011034153.png#alt=)
 
-## ApplicationContext 的实现类
+### ApplicationContext 的实现类
 
 1. ClassPathXmlApplicationContext：从类的根路径下加载配置文件（推荐）
 2. FileSystemXMLApplicationContext：从磁盘路径上加载配置文件，配置文件可以在磁盘任意位置
 3. AnnotationConfigApplicationContext：使用注解配置容器对象时，需要使用此类来创建 Spring 容器，用来读取注解
 
-## getBean() 方法使用
+### getBean() 方法使用
 
 主要有两个常用的
 
-1. 
+1.
+
 ```java
 public Object getBean(String name) throw BeansException {};dd
 ```
 
-
 这种方式允许配置文件中出现多个同类型的 Bean 对象，用不同的 ID 进行获取
 
-2. 
+2.
+
 ```java
 public <T> T getBean(Class<T> requiredType) throws BeansException {}
 ```
 
+这种方式不允许配置文件中出现多个同类型的  Bean 对象
 
-这种方式不允许配置文件中出现多个同类型的  Bean 对象
+## 注解开发
 
-
-# 注解开发
-
-## 开启路径扫描
+### 开启路径扫描
 
 只有开启路径扫描，Spring 才会去指定路径扫描文件是否带有注解
 
@@ -356,7 +354,7 @@ public <T> T getBean(Class<T> requiredType) throws BeansException {}
 </context:component-scan>
 ```
 
-## Spring 原始注解注入
+### Spring 原始注解注入
 
 ![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/image-20211031162406100.png#alt=image-20211031162406100)
 
@@ -398,7 +396,7 @@ public class UserServiceImpl implements UserService {
 
 @value注解用于原始数据类型（这里包括 String）的注入
 
-## 完全注解开发
+### 完全注解开发
 
 完全注解即不需要 xml 配置文件，取而代之的是配置类
 
@@ -410,41 +408,47 @@ public class SpringConfig {
 }
 ```
 
-# AOP
+## AOP
 
-## AOP相关术语
+### AOP相关术语
 
-1. 
+1.
+
 连接点
 
 类中理论上可被增强的方法，称为连接点
 
-2. 
+2.
+
 切入点
 
 实际类中被真正增强的方法，称为切入点
 
-3. 
+3.
+
 通知（增强）
 
-   - 
+*
+
 实际增强的（新添加的逻辑）部分，就称为增强或通知
 
-   - 
+*
+
 通知分为以下五种：
 
-      - 前置通知
-      - 后置通知
-      - 环绕通知
-      - 异常通知
-      - 最终通知
-4. 
-切面
+```
+  - 前置通知
+  - 后置通知
+  - 环绕通知
+  - 异常通知
+  - 最终通知
+```
+
+4\. 切面
 
 切面是一个动作，它就是把通知应用到切入点的过程
 
-
-## AOP 操作
+### AOP 操作
 
 Spring 框架一般是基于 AspectJ 实现 AOP 操作； AspectJ 不是 Spring 的组成部分，是一个独立的 AOP 框架，一般是把 Spring 框架和 Spring 框架一起使用，进行 AOP 操作
 
@@ -472,7 +476,7 @@ Spring 框架一般是基于 AspectJ 实现 AOP 操作； AspectJ 不是 Spring 
 <aop:aspectj-autoproxy />
 ```
 
-## 注解操作
+### 注解操作
 
 创建代理对象类，并且为其添加相应注解
 
@@ -514,26 +518,26 @@ public class UserProxy {
 
 五种通知无异常情况下执行顺序如下：
 
-- Around Before
-- Before
-- Method
-- Around After
-- After - 最终通知
-- After Returning - 后置通知
+* Around Before
+* Before
+* Method
+* Around After
+* After - 最终通知
+* After Returning - 后置通知
 
 若有异常，则如下顺序：
 
-- Around Before
-- Before
-- (Method)
-- After
-- After Throwing
+* Around Before
+* Before
+* (Method)
+* After
+* After Throwing
 
-## 注解操作：抽取切入点
+### 注解操作：抽取切入点
 
 切入点抽取：
 
-创建一个 method 并且添加上 [@Pointcut ](/Pointcut ) 注解，然后把切入点配置给这个注解，后续对该切入点设置通知，只需要调用该方法即可获取到切入点 
+创建一个 method 并且添加上 [@Pointcut ](../Pointcut/)注解，然后把切入点配置给这个注解，后续对该切入点设置通知，只需要调用该方法即可获取到切入点
 
 ```java
 // 抽取切入点
@@ -547,9 +551,9 @@ public void before() {
 }
 ```
 
-## 注解操作：优先级
+### 注解操作：优先级
 
-当有多个增强类对目标类进行增强的话，可以设置优先级，来决定谁先执行谁后执行，通过 [@Order ](/Order ) 注解来实现 
+当有多个增强类对目标类进行增强的话，可以设置优先级，来决定谁先执行谁后执行，通过 [@Order ](../Order/)注解来实现
 
 ```java
 @Component
@@ -558,7 +562,7 @@ public void before() {
 public class PersonProxy {}
 ```
 
-## 注解操作：完全注解开发（补充）
+### 注解操作：完全注解开发（补充）
 
 在 SpringConfig 这个 class 中，添加 @EnableAspectJAutoProxy 这一条注解，并且将 proxyTargetClass 设置为 true
 
@@ -569,9 +573,9 @@ public class PersonProxy {}
 public class SpringConfig{}
 ```
 
-# SpringTemplate
+## SpringTemplate
 
-## 数据库配置文件
+### 数据库配置文件
 
 导入连接池和数据库链接包
 
@@ -604,7 +608,7 @@ jdbc.username=root
 jdbc.password=123456
 ```
 
-## Spring配置数据源
+### Spring配置数据源
 
 以上连接池都有无参构造，并且都是通过 set 方法来配置关键信息，所以可以通过依赖注入的方式来让 Spring 生成对应的连接池对象，并且存放在 Spring 容器中
 
@@ -627,7 +631,7 @@ jdbc.password=123456
       p:dataSource-ref="dataSource"/>
 ```
 
-## 添加操作
+### 添加操作
 
 在 DaoImpl 中执行添加操作，通过 jdbcTemplate 中的 update 方法实现，假设我们有一个 BookDaoImpl 的方法：
 
@@ -650,11 +654,11 @@ public class BookDaoImpl implements BookDao {
 
 其中 update 方法的第一个参数是 sql 语句，第二个参数为一个可变参数，也可以是一个参数数组，以此替换到sql 语句的 "?"
 
-## 修改和删除（略）
+### 修改和删除（略）
 
 和添加基本一样
 
-## 查询操作（具体值示例）
+### 查询操作（具体值示例）
 
 通过 jdbcTemplace 的 queryForObject 来实现，比如想要查询一个表中一共有多少条数据：
 
@@ -666,7 +670,7 @@ public int selectCount() {
 }
 ```
 
-## 查询操作（对象示例）
+### 查询操作（对象示例）
 
 和查值基本一样，但是需要多传入一个 Mapper 参数，以此让程度通过 Bean 的 set 方法来生成对象：
 
@@ -680,7 +684,7 @@ public Book findByID(String id) {
 
 Mapper 调用 set 方法的时候，是去找 Bean 方法名中能对应上的，而不是去找 filed 的名字
 
-## 查询操作（集合示例）
+### 查询操作（集合示例）
 
 比如查询图书列表、分页，此时会从数据库拿到一个集合，同样也是通过 queryForObject 来获取：
 
@@ -692,7 +696,7 @@ public List<Book> findAll() {
 }
 ```
 
-## 批量操作（添加示例）
+### 批量操作（添加示例）
 
 同时操作表中的多条记录，比如批量添加，可以通过 jdbcTemplate 的 **batchUpdate** 来实现：
 
@@ -729,9 +733,9 @@ public void batchAddTest() {
 }
 ```
 
-## 批量操作（修改/删除）略
+### 批量操作（修改/删除）略
 
-# 事务
+## 事务
 
 事务是数据库操作最基本的单元，逻辑上的一组操作，要么全部成功；如果有一个失败则全部都失败。典型的一个使用场景就是银行转账。
 
@@ -742,21 +746,24 @@ public void batchAddTest() {
 3. 隔离性
 4. 持久性
 
-## 注解式事务管理
+### 注解式事务管理
 
 基于 AOP 实现，想要开启注解式事务管理需要以下几个步骤：
 
-1. 
+1.
+
 在 XML 配置文件中创建事务管理器
+
 ```xml
 <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	<property name="dataSource" ref="dataSource" />ty>
 </bean>
 ```
 
+2.
 
-2. 
 然后开启事务注解，开启事务注解之前需要引入 tx 命名空间
+
 ```xml
 <!-- 设置命名空间 -->
 xmlns:tx="http://www.springframework.org/schema/tx"
@@ -767,19 +774,18 @@ http://www.springframework.org/schema/tx/spring-tx.xsd"
 <tx:annotation-driven transaction-manager="transactionManager" />
 ```
 
+3.
 
-3. 
-将 [@Transactional ](/Transactional ) 注解添加到 Class 上面或者加到 Method 上面；加到 Class 上面意思是该 Class 内的所有 methods 都会开启事务；加到 Method 上面的话，只给单独的 Method 开启事务 
+将 [@Transactional ](../Transactional/)注解添加到 Class 上面或者加到 Method 上面；加到 Class 上面意思是该 Class 内的所有 methods 都会开启事务；加到 Method 上面的话，只给单独的 Method 开启事务
 
+### 注解参数（传播级别）
 
-## 注解参数（传播级别）
-
-当事务方法（对数据库有修改）被调用时，需要对其进行管理，规定是否开启事务，可以通过设置 [@Transactional ](/Transactional ) 中的 propagation 属性来做设置 
+当事务方法（对数据库有修改）被调用时，需要对其进行管理，规定是否开启事务，可以通过设置 [@Transactional ](../Transactional/)中的 propagation 属性来做设置
 
 Spring 框架有 7 种传播行为：
 
 1. REQUIRED（默认）：当 A 事务方法在事务当中，并且调用了 B 事务方法，则 B 会继续在 A 的事务中运行；若 A 不在事务当中，则 B 开启一个新的事务，并在其中运行
-2. REQUIRED_NEW：无论 A 事务方法是否运行在事务中，当调用 B 的时候，都会开启一个新的事务，并且在其中运行
+2. REQUIRED\_NEW：无论 A 事务方法是否运行在事务中，当调用 B 的时候，都会开启一个新的事务，并且在其中运行
 
 ![](https://images-1259064069.cos.ap-guangzhou.myqcloud.com/images/image-20211124042508307.png#alt=image-20211124042508307)
 
@@ -789,7 +795,7 @@ Spring 框架有 7 种传播行为：
 @Transactional(propagation = Propagation.REQUIRED)
 ```
 
-## 注解参数（隔离级别）
+### 注解参数（隔离级别）
 
 隔离级别主要是用来解决并发的时候出现的一些问题：脏读、不可重复读和幻读
 
@@ -801,13 +807,12 @@ Spring 框架有 7 种传播行为：
 
 隔离级别设置：
 
-|  | 脏读 | 不可重复读 | 幻读 |
-| :---: | :---: | :---: | :---: |
-| **READ UNCOMMITTED** | 有 | 有 | 有 |
-| **READ COMMITTED** | 没有 | 有 | 有 |
-| **REPEATABLE READ** | 没有 | 没有 | 有 |
-| **SERIALIZABLE** | 没有 | 没有 | 没有 |
-
+|                      |  脏读 | 不可重复读 |  幻读 |
+| :------------------: | :-: | :---: | :-: |
+| **READ UNCOMMITTED** |  有  |   有   |  有  |
+|  **READ COMMITTED**  |  没有 |   有   |  有  |
+|  **REPEATABLE READ** |  没有 |   没有  |  有  |
+|   **SERIALIZABLE**   |  没有 |   没有  |  没有 |
 
 使用示例：
 
@@ -815,16 +820,16 @@ Spring 框架有 7 种传播行为：
 @Transactional(isolation = Isolation.REPEATABLE_READ)
 ```
 
-## 注解参数（其他参数）
+### 注解参数（其他参数）
 
 1. **timeout**：事务需要在一定时间内提交，否则回滚，默认值 -1，单位秒
 2. **readOnly**：是否只读，默认为 false；为 true 时，只能查询，反之增删改查都可以
 3. rollbackFor：设置为哪些异常进行回滚
 4. noRollbackFor：设置不为哪些异常进行
 
-# 其他功能
+## 其他功能
 
-## 整合日志框架
+### 整合日志框架
 
 使用 Log4j ，先添加依赖：
 
@@ -846,10 +851,9 @@ Spring 框架有 7 种传播行为：
 
 > 具体其他配置方式参考 [https://logging.apache.org/log4j/2.x/manual/configuration.html](https://logging.apache.org/log4j/2.x/manual/configuration.html)
 
+### 整合 JUnit4/5
 
-## 整合 JUnit4/5
-
-之前写单元测试需要每一次都获取 ApplicationContext 很麻烦，可以配合注解的方式直接给单元测试类配好容器，然后在通过 [@Autowired ](/Autowired ) 和 [@Qualifier ](/Qualifier ) 直接拿到想要的 Bean 
+之前写单元测试需要每一次都获取 ApplicationContext 很麻烦，可以配合注解的方式直接给单元测试类配好容器，然后在通过 [@Autowired ](../Autowired/)和 [@Qualifier ](../Qualifier/)直接拿到想要的 Bean
 
 首先引入 Spring 的 test 包：
 
@@ -878,29 +882,28 @@ public class JTest {
 }
 ```
 
-如果是整合 JUnit 5 的话，先引入 JUnit 5 的包，并且给单元测试类添加 [@SpringJUnitConfig ](/SpringJUnitConfig ) 注解： 
+如果是整合 JUnit 5 的话，先引入 JUnit 5 的包，并且给单元测试类添加 [@SpringJUnitConfig ](../SpringJUnitConfig/)注解：
 
 ```java
 @SpringJUnitConfig(locations = "classpath:ApplicationContextConfig.xml")
 public class JTest {}
 ```
 
-并且 [@Test ](/Test ) 注解要使用 JUnit 5 包里的 
+并且 [@Test ](../Test/)注解要使用 JUnit 5 包里的
 
-# Spring WebFlux
+## Spring WebFlux
 
 > 官方文档：
 
 > [https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html)
 
-
 简单来说它和 Spring MVC 是一个很类似的框架，都是用来操作 Web 请求的，然后 WebFlux 是异步，非阻塞，响应式，支持函数式的框架，WebFlux 更轻量级，得益于异步操作可以有更大的吞吐量。另外 WebFlux 基于 Reactor 框架，而 Reactor 框架基于 Flow（JDK 9），其实际是一种 Publisher/Subscriber 的模型
 
-## Reactor 实现响应式
+### Reactor 实现响应式
 
 Reactor 满足 Reactive 规范，其有两个核心类，Mono 和 Flux，这两个类都实现了 Publisher 接口。Flux 作为发布者对象，可以返回 N 个元素；而 Mono 只能返回 0 或者 1 个对象。他们两个都是数据流（Stream）的发布者，他们两个可以发布三种数据信号：元素值，错误信号，和完成信号，后两个都代表终止信号，终止信号用于告诉 Subscriber 数据流技术了，其中错误信号终止数据流并且把错误信息传递给 Subscriber
 
-## WebFlux 注解式
+### WebFlux 注解式
 
 ```java
 @RestController
