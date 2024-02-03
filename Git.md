@@ -64,7 +64,7 @@ Hard Reset，往前一个 commit 版本，清空 staging，并且代码也回回
 
 这是一种比较特别的 Undo 方法，它不是往回退，而是创建一个新的 “去掉之前 commit 内容的” 的新的 commit，如下图所示
 
-![image-20240202190645253](asset\image-20240202190645253.png)
+![image-20240202190645253](asset/image-20240202190645253.png)
 
 通常 Remote Master 如果想做删除之前某个 commit，一般用 revert 比较好，因为是往后新创建一个 commit，其他人协作的时候 pull 下来就可以了，不会出现版本不一致问题。
 
