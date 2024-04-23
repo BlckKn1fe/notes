@@ -2,11 +2,6 @@
 creation date: 2022-01-06T10:36:40.000Z
 last modified: 2022-01-20T01:44:51.000Z
 title: SpringBoot
-categories:
-  - spring
-  - back-end
-tags:
-  - springBoot
 ---
 
 # SpringBoot

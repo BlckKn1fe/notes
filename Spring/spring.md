@@ -2,12 +2,6 @@
 creation date: 2021-10-09T23:55:20.000Z
 last modified: 2021-12-18T00:52:07.000Z
 title: Spring
-categories:
-  - back-end
-  - spring
-tags:
-  - spring
-  - java
 ---
 
 # Spring
