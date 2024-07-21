@@ -40,7 +40,7 @@ JUnit 5 的 POM 依赖
 
 
 
-## Annotation
+## Basic Test
 
 
 
@@ -169,13 +169,87 @@ https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-te
 
 
 
+## Suit Test
+
+Suit Test 可以选择 a set of unit test 同时运行，在 JUnit 4 中使用方法如下
+
+```java
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    ArrayCompareTest.class,
+    ExceptionTest.class
+})
+public class AllTest { }
+```
+
+在 JUnit 5 中提供了更多了配置 Suit 的方式，并且注解清晰明确
+
+https://junit.org/junit5/docs/current/user-guide/#junit-platform-suite-engine-example
 
 
 
+# Mockito 4
+
+官方文档：
+
+https://javadoc.io/doc/org.mockito/mockito-core/4.11.0/org/mockito/Mockito.html
 
 
 
+## Stub
 
+有关 Stub 的概念，引入 ChatGPT 给出的回复
+
+> 在单元测试中，stubs 是一种模拟对象，用于提供控制测试环境所需的固定行为或数据。与 mocks 不同，stubs 通常不关注方法的调用情况，**而是用于提供预定义的响应或数据**。
+
+通过 Mockito 的 mock 方法可以定义某个 method 的具体返回值，下面用一段代码举例
+
+```java
+public class User {
+    private String firstName;
+    private String lastName;
+	// Constructor, Getters, Setters...
+}
+
+public interface UserRepository {
+    User findById(int userId);
+}
+
+public class UserService {
+    private UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public String getUserFullName(int userId) {
+        User user = userRepository.findById(userId);
+        return user.getFirstName() + " " + user.getLastName();
+    }
+}
+```
+
+当我们想测试 `UserService` 的返回结果的时候
+
+```java
+public class UserServiceTest {
+	
+    // Set fields...SetUp...
+
+    @Test
+    public void testGetUserFullName() {
+        // 设置 stub 的行为
+        User user = new User("John", "Doe");
+        when(userRepository.findById(1)).thenReturn(user);
+
+        // 调用被测方法
+        String fullName = userService.getUserFullName(1);
+
+        // 验证结果
+        assertEquals("John Doe", fullName);
+    }
+}
+```
 
 
 
