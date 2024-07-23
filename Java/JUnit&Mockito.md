@@ -251,15 +251,206 @@ public class UserServiceTest {
 }
 ```
 
+Stub Method 有更多用法，比如 `thenReturn` 可以进行链式调用，定义某个 Method 第 N 次调用时候返回的 value
+
+```java
+@Test
+public void ListTest() {
+    List<Integer> list = mock(List.class, "Integer");
+    when(list.size()).thenReturn(1).thenReturn(10);
+
+    assertEquals(1, list.size());
+    assertEquals(10, list.size());
+}
+```
+
+他还可以使用 `thenThrow` 来抛出异常，`thenAnswer` 来更加高度的定义被测试方法的行为
+
+
+
+在 `when` method 中，可以手动给予一个 fixed argument，也可以使用 Mockito 提供的 Argument Matcher，比如说 List 中的 `get` 方法需要一个 Integer 作为 input，假设需求是无论传给 `get` 任何整数的时候，都 return 一个 `“value”` 字符串
+
+```java
+@Test
+public void ListTest() {
+    List<String> list = mock(List.class);
+    when(list.get(anyInt())).thenReturn("value");
+
+    assertEquals("value", list.get(0));
+    assertEquals("value", list.get(99));
+}
+```
+
+Mockito 还提供更多的 Argument Matcher
+
+https://javadoc.io/doc/org.mockito/mockito-core/4.11.0/org/mockito/ArgumentMatchers.html
+
+
+
+## Verify
+
+Verify 可以用来判断某个方法，有没有被正常的调用、调用（至少/至多）几次、或者从来没有被调用过。
+
+比如 List 方法的 add，可能有调用过 `list.add(“Hello”)`，但是没有调用过 `list.add(“Bye”)` ，就可以通过 Verify 来验证，更多的例子和使用参考官方文档：
+
+https://javadoc.io/doc/org.mockito/mockito-core/4.11.0/org/mockito/Mockito.html#4
 
 
 
 
 
+## ArgumentCatpor
+
+它可以用在 Verify 的过程里，获取某个 method 被调用的时候所传给的参数
+
+假如我们以下代码
+
+```java
+public class UserController {
+    private EmailService emailService;
+
+    public UserController(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
+    public void welcomeNewUser(String userEmail) {
+        String message = "Welcome to our service!";
+        emailService.sendEmail(userEmail, message);
+    }
+}
+```
+
+然后我们想测试 `sendEmail` 有没有被正确的调用并且获取我们给的参数
+
+```java
+public class UserControllerTest {
+
+    @Test
+    public void testWelcomeNewUser() {
+        // 创建 EmailService 的 mock 对象
+        EmailService emailService = mock(EmailService.class);
+        UserController userController = new UserController(emailService);
+
+        // 调用方法
+        userController.welcomeNewUser("test@example.com");
+
+        // 捕获参数
+        ArgumentCaptor<String> recipientCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<String> messageCaptor = ArgumentCaptor.forClass(String.class);
+
+        // 验证 sendEmail 方法被调用并捕获参数
+        verify(emailService).sendEmail(recipientCaptor.capture(), messageCaptor.capture());
+
+        // 断言捕获的参数值
+        assertEquals("test@example.com", recipientCaptor.getValue());
+        assertEquals("Welcome to our service!", messageCaptor.getValue());
+    }
+}
+```
+
+它还可以 Capture 对象类型的参数，更多使用参考文档
+
+https://javadoc.io/doc/org.mockito/mockito-core/4.11.0/org/mockito/Mockito.html
 
 
 
+## Hamcrest Matcher
 
+Hamcrest 提供了更加强大的、灵活的判定规则，比如在 Assert 的时候可以判断 Value 是否大于、小于某个范围；判断集合大小、集合中是否存在某些 Value 等。
+
+Hamcrest 使用 `assertThat` 方法
+
+```java
+@Test
+public void testHamcrest() {
+    // Collection
+    List<Integer> list = Arrays.asList(101, 102, 103, 104, 105);
+
+    assertThat(list, hasSize(5));
+    assertThat(list, hasItems(101, 102));
+    assertThat(list, everyItem(greaterThan(100)));
+    assertThat(list, everyItem(lessThan(110)));
+
+    // String
+    String str = "Hello";
+    assertThat(str, hasLength(5));
+    assertThat(str, not(emptyOrNullString()));
+
+    // Array
+    Integer[] arr = {1, 2, 3};
+    assertThat(arr, arrayWithSize(3));
+    assertThat(arr, arrayContaining(1, 2, 3));
+    assertThat(arr, arrayContainingInAnyOrder(2, 3, 1));
+}
+```
+
+官方 Java API Doc：
+
+https://hamcrest.org/JavaHamcrest/javadoc/2.2/
+
+
+
+## Mockito Annotation
+
+有四个比较方便的注解：`@Mock`，`@InjectMocks`，`@Captor`，`@RunWith(MockitoJUnitRunner.class)`，这些注解会自动的 Inject 依赖，和 Spring 中的 `@Autowire` 差不多
+
+```java
+@RunWith(MockitoJUnitRunner.class)
+public class MockitoAnnotationTest{
+    
+    @Mock
+    UserRepository userRepositoryMock;
+    
+    @InjectMocks  // 它会自动找到 UserRepository 的 Bean 并且注入进来，如果有多个相同依赖，可以考虑手动注入
+    UserService userService;
+    
+    @Captor
+    ArgumentCaptor<Integer> userIdArgCaptor
+    
+}
+```
+
+如果说，又想使用 Parameterized Test 又想使用 Mockito Annotation 的话，可以通过 `@Before` 注解来实现
+
+```java
+@Before
+public void setUp() {
+    try (AutoCloseable mocks = MockitoAnnotations.openMocks(this)) {
+		// Other initialization code...
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+    }
+}
+```
+
+还有一个办法是添加下面这个注解在 Class 的 fileds 中，要求 JUnit 版本在 4.7 及以上
+
+```java
+@Rule
+public MockitoRule mockitoRule = MockitoJUnit.rule();
+```
+
+
+
+## Spy
+
+`spy` 和 `mock` 方法都是 Mockito 提供的，`mock` 说的简单点就是完全的屏蔽掉原来 Class 的 Logic，然后自己重新定义每个 method；但是 `spy` 会保留原本的 Class 的逻辑的同时，并不影响我们 stub 其中的某个 method，是一种 Partial Mock
+
+```java
+@Test
+public void spyTest() {
+    List list = spy(ArrayList.class);
+    // 保留原有逻辑
+    list.add(1);
+    assertThat(list.size(), equalTo(1));
+	
+    // Stub
+    when(list.size()).thenReturn(10);
+    assertThat(list.size(), equalTo(10));
+}
+```
+
+不太推荐使用 Spy，主要是因为它可能会造成测试的复杂性和可靠性。
 
 
 
