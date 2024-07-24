@@ -454,6 +454,50 @@ public void spyTest() {
 
 
 
+## Mock Static
+
+Mockito 从 3.4 之后就支持 mock static method 了，之前需要用 PowerMock 这个框架，但是这个框架于两年多之前就停止更新了，并且它似乎与 Mockito 4 之后的版本有冲突
+
+Mockito 中测试静态方法使用方法大致如下
+
+```java
+@Test
+public void testStaticMethod() {
+    // 也可以创建 StatiMock 对象之后，在后面手动 close 掉
+    try (MockedStatic<MyStaticClass> mockedStatic = Mockito.mockStatic(MyStaticClass.class)) {
+        // 这里本质是传一个 Answer 的实现
+        staticMock.when(() -> MyStaticClass.staticMethod().thenReturn("mocked result");
+        assertEquals("mocked result", MyStaticClass.staticMethod());
+    }
+}
+```
+
+
+
+## Mock Private/Constructor
+
+Mockito 暂时不支持，有新的方案再更新
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
