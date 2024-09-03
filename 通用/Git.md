@@ -1,3 +1,34 @@
+# Rebase
+
+当完成自己代码，准备添加 Project 中的时候，确定 mainline 是最新的， `git pull` 
+
+**假设我们自己的分支（`my-dev`)上只有一个 commit**，所有的修改都在这一个 commit，有两种比较常用选择：
+
+**第一种**：记录下 `my-dev` 分支最新 commit，回到 mainline，使用 `cherry-pick`，`cherry-pick` 把某个 commit 中的修改拿过来，**它不会把那个 commit 之前的修改也一起拿过来！**
+
+```shell
+git log # 查看 commit，比如 92f1bb80a18f819a1be68b7b1c2b47f8d18a7ebb
+git checkout mainline
+git cherry-pick <commit> # 92f1bb80a18f819a1be68b7b1c2b47f8d18a7ebb
+```
+
+Branch 的样子就会变成下图的样子
+
+![image-20240902214626393](assets/git-cherry-pick.png)
+
+**第二种**：在 `my-dev` 上使用 `git rebase mainline` ，Branch 会变成下面的样子
+
+![image-20240902214626393](assets/git-rebase.png)
+
+在第二种方式中，git 其实就是把 `my-dev` 上的修改，全部架到 mainline 上去了，最后记得需要 checkout 回 mainline 执行 merge
+
+```shell
+git checkout mainline
+git merge my-dev
+```
+
+
+
 # Add/Push 相关
 
 
@@ -11,6 +42,8 @@ git push -u <remote-repo-name> <local-branch-name>:<remote-branch-name>
 ```
 
 之后在设置好 Up Stream 的 local branch 执行 `git push` 的时候，就会默认把本地这个 branch 推送到绑定的远端 branch 上
+
+
 
 
 
@@ -64,7 +97,7 @@ Hard Reset，往前一个 commit 版本，清空 staging，并且代码也回回
 
 这是一种比较特别的 Undo 方法，它不是往回退，而是创建一个新的 “去掉之前 commit 内容的” 的新的 commit，如下图所示
 
-![image-20240202190645253](asset/image-20240202190645253.png)
+![image-20240202190645253](assets/image-20240202190645253.png)
 
 通常 Remote Master 如果想做删除之前某个 commit，一般用 revert 比较好，因为是往后新创建一个 commit，其他人协作的时候 pull 下来就可以了，不会出现版本不一致问题。
 
